@@ -15,33 +15,26 @@ namespace LoggingKata
             logger.LogInfo("Log initialized");
 
             var lines = File.ReadAllLines(csvPath);
-
-            logger.LogInfo($"Lines: {lines[0]}");
+            //logger.LogInfo($"Lines: {lines[0]}");
 
             var parser = new TacoParser();
-
-            var thing = parser.Parse(lines[0]);
-
-            Console.WriteLine("Name: " + thing.Name);
-            Console.WriteLine("Location: {0}, {1}", thing.Location.Latitude, thing.Location.Longitude);
-
             var locations = lines.Select(parser.Parse).ToList();
 
-            // TODO:  Find the two Taco Bells in Alabama that are the furthest from one another.
-            // HINT:  You'll need two nested forloops
-
-            ITrackable tbell1 = null;
-            ITrackable tbell2 = null;
+            // Find the two Taco Bells in Alabama that are the furthest from one another.
+            
+            ITrackable tbell1 = locations[0];
+            ITrackable tbell2 = locations[0];
             double distance = 0;
+            logger.LogInfo("Searching locations...");
 
             for (int i = 0; i < locations.Count(); i++)
             {
                 var locA = locations[i].Location;
                 var coordA = new GeoCoordinate(locA.Latitude, locA.Longitude);
-
+                
                 for (int j = 0; j < locations.Count(); j++)
                 {
-                    var locB = locations[i].Location;
+                    var locB = locations[j].Location;
                     var coordB = new GeoCoordinate(locB.Latitude, locB.Longitude);
 
                     var dist = coordA.GetDistanceTo(coordB);
@@ -54,10 +47,13 @@ namespace LoggingKata
                 }
             }
 
-            Console.WriteLine("Location 1: " + tbell1.Name);
-            Console.WriteLine("Location 2: " + tbell2.Name);
-            Console.WriteLine("Distance: " + distance);
-
+            Console.WriteLine("\nLOCATION 1");
+            Console.WriteLine("  Name: " + tbell1.Name);
+            Console.WriteLine("  Point: " + tbell1.Location.ToString());
+            Console.WriteLine("\nLOCATION 2");
+            Console.WriteLine("  Name: " + tbell2.Name);
+            Console.WriteLine("  Point: " + tbell2.Location.ToString());
+            
             Console.ReadKey();
         }
     }

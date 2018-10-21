@@ -16,10 +16,8 @@ namespace LoggingKata.Test
         [InlineData("0,0,name")]
         [InlineData("-99.99,-99.989,name name name name name ")]
         [InlineData("50,   60,    name...")]
-        [InlineData("0,0,name")]
         public void ShouldParse(string str)
         {
-
             // Arrange
             var parser = new TacoParser();
 

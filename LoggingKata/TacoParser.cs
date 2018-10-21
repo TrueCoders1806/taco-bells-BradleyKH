@@ -29,7 +29,7 @@ namespace LoggingKata
             var name = cells[2];
 
             var tBell = new TacoBell(name, location);
-            logger.LogInfo("New instance of TacoBell made.");
+            // logger.LogInfo("New instance of TacoBell made.");
 
             return tBell;
         }
