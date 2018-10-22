@@ -31,6 +31,7 @@ namespace LoggingKata.Test
         [Theory]
         [InlineData(null)]
         [InlineData("")]
+        [InlineData("hickory, dickory, dock")]
         public void ShouldFailParse(string str)
         {
             // Arrange
