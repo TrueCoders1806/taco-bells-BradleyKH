@@ -51,6 +51,7 @@ namespace LoggingKata
             Console.WriteLine("\nLOCATION 2");
             Console.WriteLine("  Name: " + tbell2.Name);
             Console.WriteLine("  Point: " + tbell2.Location.ToString());
+            Console.WriteLine("\nDISTANCE: {0:n2} meters", distance);
             
             Console.ReadKey();
         }

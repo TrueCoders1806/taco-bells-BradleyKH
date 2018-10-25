@@ -30,6 +30,7 @@ namespace LoggingKata
                 return null;
             }
 
+
             // If the first two elements in the array are not decimals...            
             var location = new Point();
             try
@@ -47,6 +48,18 @@ namespace LoggingKata
             } catch (Exception e)
             {
                 logger.LogWarning("Longtitude is not formatted correctly.");
+                return null;
+            }
+
+            if (Math.Abs(location.Latitude) > 90)
+            {
+                logger.LogWarning("Latitude must be between -90 and 90.");
+                return null;
+            }
+
+            if (Math.Abs(location.Longitude) > 180)
+            {
+                logger.LogWarning("Latitude must be between -180 and 180.");
                 return null;
             }
 
