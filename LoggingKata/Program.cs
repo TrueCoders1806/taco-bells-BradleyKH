@@ -15,15 +15,45 @@ namespace LoggingKata
             logger.LogInfo("Log initialized");
 
             var lines = File.ReadAllLines(csvPath);
-
-            logger.LogInfo($"Lines: {lines[0]}");
-
             var parser = new TacoParser();
+            var locations = lines.Select(parser.Parse).ToList();
 
-            var locations = lines.Select(parser.Parse);
+            // Find the two Taco Bells in Alabama that are the furthest from one another.
+            
+            ITrackable tbell1 = locations[0];
+            ITrackable tbell2 = locations[0];
+            double distance = 0;
+            logger.LogInfo("Searching locations...");
 
-            // TODO:  Find the two Taco Bells in Alabama that are the furthest from one another.
-            // HINT:  You'll need two nested forloops
+            for (int i = 0; i < locations.Count(); i++)
+            {
+                var locA = locations[i].Location;
+                var coordA = new GeoCoordinate(locA.Latitude, locA.Longitude);
+                
+                for (int j = 0; j < locations.Count(); j++)
+                {
+                    var locB = locations[j].Location;
+                    var coordB = new GeoCoordinate(locB.Latitude, locB.Longitude);
+
+                    var dist = coordA.GetDistanceTo(coordB);
+                    if (dist > distance)
+                    {
+                        distance = dist;
+                        tbell1 = locations[i];
+                        tbell2 = locations[j];
+                    }
+                }
+            }
+
+            Console.WriteLine("\nLOCATION 1");
+            Console.WriteLine("  Name: " + tbell1.Name);
+            Console.WriteLine("  Point: " + tbell1.Location.ToString());
+            Console.WriteLine("\nLOCATION 2");
+            Console.WriteLine("  Name: " + tbell2.Name);
+            Console.WriteLine("  Point: " + tbell2.Location.ToString());
+            Console.WriteLine("\nDISTANCE: {0:n2} meters", distance);
+            
+            Console.ReadKey();
         }
     }
 }
